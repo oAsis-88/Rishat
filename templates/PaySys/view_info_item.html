@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+{% block title %}View item{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+{% endblock %}
+{% block scripts %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'PaySys/main.js' %}"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <div class="card w-50">
+                <div class="card-header">
+                    <h1 class="card-title">{{ Item.name }}</h1>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ Item.description }}</p>
+                    {#                    <p class="card-subtitle">{{ Item.price }}</p>#}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ Item.price }}</li>
+                </ul>
+            </div>
+            <button class="button is-primary w-50 mt-2" id="buy-button">Buy</button>
+        </div>
+    </section>
+{% endblock %}
+
+<script type="text/javascript">
+    fetch("/config/").then((result) => {
+        return result.json();
+    })
+        .then((data) => {
+            console.log("it's data -", data);
+            var stripe = Stripe(data.publicKey);
+            var buyButton = document.getElementById('buy-button');
+            buyButton.addEventListener('click', function () {
+                // Create a new Checkout Session using the server-side endpoint
+                // Redirect to Stripe Session Checkout
+                fetch('/buy/1', {method: 'GET'})
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then(session => stripe.redirectToCheckout({sessionId: session.id}))
+            });
+
+        });
+
+    fetch("/config/")
+        .then((result) => {
+            return result.json();
+        })
+        .then((data) => {
+            // Initialize Stripe.js
+            const stripe = Stripe(data.publicKey);
+
+            // Event handler
+            document.querySelector("#buy-button").addEventListener("click", () => {
+                // Get Checkout Session ID
+                fetch("/create-checkout-session/")
+                    .then((result) => {
+                        return result.json();
+                    })
+                    .then((data) => {
+                        console.log("it's data -", data);
+                        // Redirect to Stripe Checkout
+                        return stripe.redirectToCheckout({
+                            sessionId: data.id
+                        })
+                    })
+                    .then((res) => {
+                        console.log("-----  res  -----");
+                        console.log(res);
+                    });
+            });
+        });
+</script>

@@ -1,0 +1,22 @@
+{% load static bootstrap5%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block metas %}{% endblock %}
+    <title>{% block title %}Payment system{% endblock %}</title>
+    {% block styles %}{% endblock %}
+    {% block scripts %}{% endblock %}
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+</head>
+<body>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

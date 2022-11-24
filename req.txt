@@ -1,0 +1,6 @@
+Django
+stripe
+django-debug-toolbar
+django-jazzmin
+djangorestframework
+django-bootstrap-v5
