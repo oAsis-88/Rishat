@@ -10,49 +10,52 @@ from rest_framework.decorators import api_view
 from PaySys.models import Item
 
 
-@api_view(['POST'])
 def api_post_buyItem(request, id):
-    item_info = {'id', id}
     item = Item.objects.get(id=id)
 
     domain_url = os.getenv('DOMAIN_URL', 'http://localhost:8000/')
-    checkout_session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=[{
-            'price_data': {
-                'currency': 'usd',
-                'unit_amount': 150,
-                'product_data': {
-                    'name': 'test product',
-                    'description': 'it\'s my first test product',
-                    'images': [],
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    # 'currency': 'usd',
+                    # 'unit_amount': 150,
+                    'currency': str(item.currency),
+                    'unit_amount': int(item.price) * 100,
+                    'product_data': {
+                        # 'name': 'test product',
+                        # 'description': 'it\'s my first test product',
+                        'name': str(item.name),
+                        'description': str(item.description),
+                        'images': [],
+                    },
                 },
-            },
-            'quantity': 1,
-        }],
-        mode='payment',
-        success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url=domain_url + 'cancelled/',
-    )
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=domain_url + 'cancelled/',
+        )
+    except Exception as er:
+        return JsonResponse({'error': str(er)})
     return JsonResponse({'id': checkout_session['id']})
 
 
 def api_get_viewItem(request, id):
-    item_info = {'id': id, 'name': '', 'description': '', 'price': ''}
+    item_info = {'id': id, 'name': '', 'description': '', 'price': '', 'currency': ''}
     try:
         item = Item.objects.get(id=id)
         item_info['name'] = item.name
         item_info['description'] = item.description
         item_info['price'] = item.price
+        item_info['currency'] = item.currency
     except Exception as er:
         error_message = f"Item with id={id} does not exist"
         return render(request, 'PaySys/error.html', context={'error': error_message})
 
     return render(request, 'PaySys/view_info_item.html', context={'Item': item_info})
-
-
-def home_page(request):
-    return render(request, 'home.html')
 
 
 def success_stripe(request):
@@ -68,35 +71,6 @@ def stripe_config(request):
     if request.method == 'GET':
         stripe_conf = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
         return JsonResponse(stripe_conf, safe=False)
-
-
-@csrf_exempt
-def create_checkout_session(request):
-    if request.method == 'GET':
-        domain_url = os.getenv('DOMAIN_URL', 'http://localhost:8000/')
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        try:
-            checkout_session = stripe.checkout.Session.create(
-                payment_method_types=['card'],
-                line_items=[{
-                    'price_data': {
-                        'currency': 'usd',
-                        'unit_amount': 150,
-                        'product_data': {
-                            'name': 'test product',
-                            'description': 'it\'s my first test product',
-                            'images': [],
-                        },
-                    },
-                    'quantity': 1,
-                }],
-                mode='payment',
-                success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=domain_url + 'cancelled/',
-            )
-            return JsonResponse({'sessionId': checkout_session['id']})
-        except Exception as er:
-            return JsonResponse({'error': str(er)})
 
 
 @csrf_exempt

@@ -30,60 +30,10 @@
                     {#                    <p class="card-subtitle">{{ Item.price }}</p>#}
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ Item.price }}</li>
+                    <li class="list-group-item">{{ Item.price }} {{ Item.currency }}</li>
                 </ul>
             </div>
-            <button class="button is-primary w-50 mt-2" id="buy-button">Buy</button>
+            <button class="button is-primary w-50 mt-2" id="buy-button" value="{{ Item.id }}">Buy</button>
         </div>
     </section>
 {% endblock %}
-
-<script type="text/javascript">
-    fetch("/config/").then((result) => {
-        return result.json();
-    })
-        .then((data) => {
-            console.log("it's data -", data);
-            var stripe = Stripe(data.publicKey);
-            var buyButton = document.getElementById('buy-button');
-            buyButton.addEventListener('click', function () {
-                // Create a new Checkout Session using the server-side endpoint
-                // Redirect to Stripe Session Checkout
-                fetch('/buy/1', {method: 'GET'})
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then(session => stripe.redirectToCheckout({sessionId: session.id}))
-            });
-
-        });
-
-    fetch("/config/")
-        .then((result) => {
-            return result.json();
-        })
-        .then((data) => {
-            // Initialize Stripe.js
-            const stripe = Stripe(data.publicKey);
-
-            // Event handler
-            document.querySelector("#buy-button").addEventListener("click", () => {
-                // Get Checkout Session ID
-                fetch("/create-checkout-session/")
-                    .then((result) => {
-                        return result.json();
-                    })
-                    .then((data) => {
-                        console.log("it's data -", data);
-                        // Redirect to Stripe Checkout
-                        return stripe.redirectToCheckout({
-                            sessionId: data.id
-                        })
-                    })
-                    .then((res) => {
-                        console.log("-----  res  -----");
-                        console.log(res);
-                    });
-            });
-        });
-</script>

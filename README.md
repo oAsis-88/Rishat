@@ -1,12 +1,9 @@
-Выполните клонирование репозитория:
-- git clone 'link'
-
-
-
-Выполните команды:
-
-1) python manage.py collectstatic --noinput
-2) python manage.py makemigrations
-3) python manage.py migrate
-4) python manage.py createsuperuser
-5) python manage.py runserver
+Выполните следующие пункты
+1) `git clone  https://github.com/oAsis-88/Rishat.git` - клонирование репозитория
+2) `python -m venv env` - создать виртуальное окружение
+3) `venv\Scripts\activate.bat` или `source env/Scripts/activate` - активировать виртуальное окружение
+4) `python manage.py makemigrations`
+5) `python manage.py migrate`
+6) `python manage.py loaddata db.json` - загружаем данные
+7) `python manage.py createsuperuser` (Если нужна админка)
+8) `python manage.py runserver`
