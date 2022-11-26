@@ -96,7 +96,6 @@ class Order(models.Model):
 
     discount = models.ManyToManyField('PaySys.Discount', blank=True, related_name="discount")
     tax = models.ManyToManyField('PaySys.Tax', blank=True, related_name="tax")
-    items = models.ManyToManyField('PaySys.Item', related_name="items")
 
     def __str__(self):
         return f"{self.name}"
@@ -109,19 +108,7 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
 
-# class OrderDiscounts(models.Model):
-#     discounts = models.ForeignKey('PaySys.Discount', on_delete=models.CASCADE)
-#     orders = models.ForeignKey('PaySys.Order', on_delete=models.CASCADE)
-#     count = models.PositiveIntegerField(verbose_name="Кол-во")
-#
-#
-# class OrderTaxs(models.Model):
-#     taxs = models.ForeignKey('PaySys.Tax', on_delete=models.CASCADE)
-#     orders = models.ForeignKey('PaySys.Order', on_delete=models.CASCADE)
-#     count = models.PositiveIntegerField(verbose_name="Кол-во")
-#
-#
-# class OrderItems(models.Model):
-#     items = models.ForeignKey('PaySys.Item', on_delete=models.CASCADE)
-#     orders = models.ForeignKey('PaySys.Order', on_delete=models.CASCADE)
-#     count = models.PositiveIntegerField(verbose_name="Кол-во")
+class OrderItems(models.Model):
+    items = models.ForeignKey('PaySys.Item', on_delete=models.CASCADE)
+    orders = models.ForeignKey('PaySys.Order', on_delete=models.CASCADE)
+    count = models.PositiveIntegerField(verbose_name="Кол-во")

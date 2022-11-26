@@ -19,7 +19,6 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    # form = OrderForm
     list_display = ('id', 'name', 'paid', 'created_at', )
     list_display_links = ('id', 'name')
 
@@ -28,4 +27,5 @@ admin.site.register(Discount, DiscountAdmin)
 admin.site.register(Tax, TaxAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderItems)
 
