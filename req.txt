@@ -4,3 +4,4 @@ django-debug-toolbar
 django-jazzmin
 djangorestframework
 django-bootstrap-v5
+django-dump-load-utf8

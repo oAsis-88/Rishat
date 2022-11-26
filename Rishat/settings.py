@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_dump_load_utf8',
     'bootstrap5',
     'debug_toolbar',  # Процесс отладки
     'PaySys.apps.PaysysConfig',
