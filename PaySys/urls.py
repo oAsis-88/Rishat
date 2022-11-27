@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import path
 
 from PaySys.views import *
@@ -12,4 +13,5 @@ urlpatterns = [
     path('webhook/', stripe_webhook),
     path('success/', success_stripe),
     path('cancelled/', cancelled_stripe),
+    path('', lambda request: redirect('catalog/', permanent=True))
 ]

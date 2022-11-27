@@ -10,8 +10,8 @@ STRIPE_ENDPOINT_SECRET = 'whsec_7d1b6074d9028f494ac202a0d74e81de8490a263e3b7ad31
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-INTERNAL_IPS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '89.108.98.35', '*']
+INTERNAL_IPS = ['127.0.0.1', 'localhost', '89.108.98.35', '*']
 
 
 INSTALLED_APPS = [
