@@ -32,10 +32,8 @@ class OrderItemsAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         try:
             item_obj = Item.objects.get(name=obj.item.name)
-            print("До", item_obj.quantity)
             item_obj.quantity -= obj.count
             item_obj.save()
-            print("После", item_obj.quantity)
             return super().save_model(request, obj, form, change)
         except Exception as er:
             pass

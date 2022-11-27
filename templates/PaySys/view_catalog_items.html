@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static paySys %}
+
+{% block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+{% block title %}View catalog{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+{% endblock %}
+{% block scripts %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'PaySys/main.js' %}"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    {#    Если понядобяться доп. настрйоки для Items   #}
+    {% result_list_items Items %}
+    {#    Можно использовать for Item in Items   #}
+
+    <button class="button is-primary w-75 mt-2 buy-button" id="buy-button"
+            value="{{ Item.id }}">Buy
+    </button>
+    {% for Item in list_items %}
+        <section class="section">
+            <div class="container">
+                <div class="card w-50">
+                    <div class="card-header justify-content-between">
+                        <h1 class="card-title">{{ Item.name }}</h1>
+                        <h3 class="text-right count-item" itemid="{{ Item.id }}">0</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ Item.description }}</p>
+                        {#                    <p class="card-subtitle">{{ Item.price }}</p>#}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ Item.price }} {{ Item.currency }}</li>
+                    </ul>
+                </div>
+                <div class="w-50">
+                    <button class="button is-primary mt-2 minus" itemid="{{ Item.id }}">-</button>
+                    <button class="button is-primary mt-2 plus" itemid="{{ Item.id }}">+</button>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+{% endblock %}

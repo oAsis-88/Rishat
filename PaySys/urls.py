@@ -5,8 +5,9 @@ from PaySys.views import *
 app_name = "paysys"
 
 urlpatterns = [
-    path('buy/<int:id>', api_post_buyItem, name='buyItemId'),
-    path('item/<int:id>', api_get_viewItem, name='viewItemId'),
+    path('buy/', api_get_buyItem, name='buyItemId'),
+    path('item/<int:id>/', viewItem, name='viewItemId'),
+    path('catalog/', viewCatalog, name='viewItemId'),
     path('config/', stripe_config),
     path('webhook/', stripe_webhook),
     path('success/', success_stripe),
