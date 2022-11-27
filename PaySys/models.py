@@ -94,8 +94,8 @@ class Order(models.Model):
     paid = models.BooleanField(default=False, verbose_name="Оплачено")
     created_at = models.DateTimeField(auto_now=True, blank=True, verbose_name='Дата создания')
 
-    discount = models.ManyToManyField('PaySys.Discount', blank=True, related_name="discount")
-    tax = models.ManyToManyField('PaySys.Tax', blank=True, related_name="tax")
+    discount = models.ManyToManyField('PaySys.Discount', blank=True, verbose_name='Скидка', related_name="discount")
+    tax = models.ManyToManyField('PaySys.Tax', blank=True, verbose_name='Налог', related_name="tax")
 
     def __str__(self):
         return f"{self.name}"
@@ -109,6 +109,16 @@ class Order(models.Model):
 
 
 class OrderItems(models.Model):
-    items = models.ForeignKey('PaySys.Item', on_delete=models.CASCADE)
-    orders = models.ForeignKey('PaySys.Order', on_delete=models.CASCADE)
+    item = models.ForeignKey('PaySys.Item', on_delete=models.CASCADE, verbose_name="Продукт")
+    order = models.ForeignKey('PaySys.Order', on_delete=models.CASCADE, verbose_name="Заказ")
     count = models.PositiveIntegerField(verbose_name="Кол-во")
+
+    def __str__(self):
+        return f"{self.order}_{self.item}"
+
+    def __unicode__(self):
+        return f"{self.order}_{self.item}#{self.id}"
+
+    class Meta:
+        verbose_name = 'Продукты заказа'
+        verbose_name_plural = 'Продукты заказа'
