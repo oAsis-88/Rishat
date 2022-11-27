@@ -22,8 +22,9 @@
     <section class="section">
         <div class="container">
             <div class="card w-50">
-                <div class="card-header">
+                <div class="card-header justify-content-between">
                     <h1 class="card-title">{{ Item.name }}</h1>
+                    <h3 class="text-right count-item" itemid="{{ Item.id }}">0</h3>
                 </div>
                 <div class="card-body">
                     <p class="card-text">{{ Item.description }}</p>
@@ -33,7 +34,20 @@
                     <li class="list-group-item">{{ Item.price }} {{ Item.currency }}</li>
                 </ul>
             </div>
-            <button class="button is-primary w-50 mt-2" id="buy-button" value="{{ Item.id }}">Buy</button>
+            <div class="w-50 ml-5 mt-2">
+                <button class="button is-primary minus" itemid="{{ Item.id }}">-</button>
+                <button class="button is-primary w-75" id="buy-button" value="{{ Item.id }}">Buy</button>
+                <button class="button is-primary plus" itemid="{{ Item.id }}">+</button>
+            </div>
+            <div class="flex w-50 ml-5 mt-2 pt-2">
+                <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">USD
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item btn_currency active" value="USD">USD</li>
+                    <hr class="dropdown-divider">
+                    <li class="dropdown-item btn_currency" value="RUB">RUB</li>
+                </ul>
+            </div>
         </div>
     </section>
 {% endblock %}

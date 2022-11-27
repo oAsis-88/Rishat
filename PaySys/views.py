@@ -11,7 +11,13 @@ from PaySys.models import *
 
 
 def api_get_buyItem(request):
-    items = request.GET
+    items = {}
+    currency_order = "USD"
+    for key, value in request.GET.items():
+        if key == 'currency':
+            currency_order = value
+        else:
+            items[key] = value
     sum_price_items = 0
     metadata = {}
     description_line_items = ""  # 1 RUB = 60 USD;
@@ -36,8 +42,10 @@ def api_get_buyItem(request):
             taxs_id.append(tax_usd.id)
 
         price_item = item.price * count_item
-        if currency == "RUB":
+        if currency_order == "USD" and currency == "RUB":
             price_item = round(price_item / 60, 2)
+        if currency_order == "RUB" and currency == "USD":
+            price_item = price_item * 60
 
         sum_price_items += price_item
 
@@ -59,7 +67,7 @@ def api_get_buyItem(request):
             payment_method_types=['card'],
             line_items=[{
                 'price_data': {
-                    'currency': 'USD',
+                    'currency': currency_order,
                     'unit_amount': int(sum_price_items * 100),
                     'product_data': {
                         'name': order.name,

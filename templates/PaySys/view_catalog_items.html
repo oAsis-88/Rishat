@@ -23,9 +23,17 @@
     {% result_list_items Items %}
     {#    Можно использовать for Item in Items   #}
 
-    <button class="button is-primary w-75 mt-2 buy-button" id="buy-button"
-            value="{{ Item.id }}">Buy
-    </button>
+    <div class="flex mt-2 pt-2">
+        <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">USD</button>
+        <ul class="dropdown-menu">
+            <li class="dropdown-item btn_currency active" value="USD">USD</li>
+            <hr class="dropdown-divider">
+            <li class="dropdown-item btn_currency" value="RUB">RUB</li>
+        </ul>
+        <button class="button is-primary w-75 buy-button" id="buy-button"
+                value="{{ Item.id }}">Buy
+        </button>
+    </div>
     {% for Item in list_items %}
         <section class="section">
             <div class="container">
