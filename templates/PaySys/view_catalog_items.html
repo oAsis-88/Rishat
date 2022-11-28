@@ -22,39 +22,40 @@
     {#    Если понядобяться доп. настрйоки для Items   #}
     {% result_list_items Items %}
     {#    Можно использовать for Item in Items   #}
-
-    <div class="flex mt-2 pt-2">
-        <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">USD</button>
-        <ul class="dropdown-menu">
-            <li class="dropdown-item btn_currency active" value="USD">USD</li>
-            <hr class="dropdown-divider">
-            <li class="dropdown-item btn_currency" value="RUB">RUB</li>
-        </ul>
-        <button class="button is-primary w-75 buy-button" id="buy-button"
-                value="{{ Item.id }}">Buy
-        </button>
-    </div>
-    {% for Item in list_items %}
-        <section class="section">
-            <div class="container">
-                <div class="card w-50">
-                    <div class="card-header justify-content-between">
-                        <h1 class="card-title">{{ Item.name }}</h1>
-                        <h3 class="text-right count-item" itemid="{{ Item.id }}">0</h3>
+    <section class="section">
+        <div class="row">
+            {% for Item in list_items %}
+                <div class="col-md-4 col-sm-12">
+                    <div class="card ">
+                        <div class="card-header justify-content-between">
+                            <h1 class="card-title">{{ Item.name }}</h1>
+                            <h3 class="text-right count-item" itemid="{{ Item.id }}">0</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ Item.description }}</p>
+                            {#                    <p class="card-subtitle">{{ Item.price }}</p>#}
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ Item.price }} {{ Item.currency }}</li>
+                        </ul>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text">{{ Item.description }}</p>
-                        {#                    <p class="card-subtitle">{{ Item.price }}</p>#}
+                    <div class="m-2">
+                        <button class="button is-primary minus" itemid="{{ Item.id }}">-</button>
+                        <button class="button is-primary plus" itemid="{{ Item.id }}">+</button>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">{{ Item.price }} {{ Item.currency }}</li>
-                    </ul>
                 </div>
-                <div class="w-50">
-                    <button class="button is-primary mt-2 minus" itemid="{{ Item.id }}">-</button>
-                    <button class="button is-primary mt-2 plus" itemid="{{ Item.id }}">+</button>
-                </div>
-            </div>
-        </section>
-    {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="mt-2 pt-2">
+            <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">USD</button>
+            <ul class="dropdown-menu">
+                <li class="dropdown-item btn_currency active" value="USD">USD</li>
+                <hr class="dropdown-divider">
+                <li class="dropdown-item btn_currency" value="RUB">RUB</li>
+            </ul>
+            <button class="button is-primary buy-button" id="buy-button"
+                    value="{{ Item.id }}">Buy
+            </button>
+        </div>
+    </section>
 {% endblock %}

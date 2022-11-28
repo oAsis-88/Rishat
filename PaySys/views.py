@@ -25,7 +25,8 @@ def api_get_buyItem(request):
     tax_rub = 0
     taxs_id = []
     # discount_id = []  # Пока не добавлено
-    new_order_id = Order.objects.last().id + 1
+    last_item = Order.objects.last()
+    new_order_id = last_item.id + 1 if last_item else 1
     order = Order.objects.create(name=f"Заказ №{new_order_id}")
 
     for key, value in items.items():
@@ -110,6 +111,16 @@ def viewItem(request, id):
 def viewCatalog(request):
     items = Item.objects.all()
     return render(request, 'PaySys/view_catalog_items.html', context={'Items': items})
+
+
+def add_to_cart(request):
+    items = Item.objects.all()
+    return render(request, 'PaySys/view_catalog_items.html', context={'Items': items})
+
+
+def viewCart(request):
+    items = Item.objects.all()
+    return render(request, 'PaySys/view_cart.html', context={'Items': items})
 
 
 def success_stripe(request):

@@ -1,4 +1,4 @@
-{% load static bootstrap5%}
+{% load static bootstrap5 %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +14,22 @@
     {% bootstrap_messages %}
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="navbar-brand">Магазин</div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="{% url 'paysys:viewCatalog' %}">Каталог</a>
+                <a class="nav-link " href="{% url 'paysys:viewCart' %}">Корзина</a>
+            </div>
+        </div>
+    </div>
+</nav>
 
 {% block content %}
 {% endblock %}
