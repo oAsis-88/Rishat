@@ -1,4 +1,8 @@
-Выполните следующие пункты
+## **Удаленный сервер:**
+#### http://89.108.98.35/
+##### Использовались nginx и gunicorn
+
+### Выполните следующие пункты для локального тестирования
 1) `git clone  https://github.com/oAsis-88/Rishat.git` - Клонирование репозитория
 2) `python -m venv venv` - Создать виртуальное окружение
 3) `venv\Scripts\activate` для Windows `source venv/bin/activate` для Linux и MacOS- Активировать виртуальное окружение
