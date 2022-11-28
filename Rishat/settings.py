@@ -10,8 +10,8 @@ STRIPE_ENDPOINT_SECRET = 'whsec_7d1b6074d9028f494ac202a0d74e81de8490a263e3b7ad31
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '89.108.98.35', '*']
-INTERNAL_IPS = ['127.0.0.1', 'localhost', '89.108.98.35', '*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '89.108.98.35']
+INTERNAL_IPS = ['127.0.0.1']
 
 
 INSTALLED_APPS = [
@@ -99,7 +99,6 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'Rishat/static'),
     os.path.join(BASE_DIR, 'PaySys/static'),
 ]
 
