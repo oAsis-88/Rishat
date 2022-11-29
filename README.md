@@ -12,3 +12,7 @@
 8) `python manage.py migrate`
 9) `python manage.py loaddatautf8 db.json` - Загружаем данные ()
 10) `python manage.py runserver`
+
+##### Admin panel
+* login: admin
+* password: admin
